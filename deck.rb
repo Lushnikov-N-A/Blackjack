@@ -1,4 +1,3 @@
-
 require_relative 'card'
 
 class Deck
@@ -6,7 +5,7 @@ class Deck
   attr_reader :cards
 
   def initialize
-      @faces = [*(2..10), 'jack', 'queen', 'king', 'ace']
+      @faces = [*(2..10), 'Jack', 'Queen', 'King', 'Ace']
       @suits = ['♠', '♥', '♦', '♣']
       @cards = []
   end
@@ -26,4 +25,5 @@ class Deck
     end
     @cards.shuffle!
   end
+
 end
