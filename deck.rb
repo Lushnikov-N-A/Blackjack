@@ -2,7 +2,7 @@ require_relative 'card'
 
 class Deck
 
-  attr_reader :cards
+  attr_reader :cards, :card
 
   def initialize
       @faces = [*(2..10), 'Jack', 'Queen', 'King', 'Ace']
@@ -24,6 +24,12 @@ class Deck
       end
     end
     @cards.shuffle!
+  end
+
+  def gets_card
+    @card = @cards.sample
+    @cards.delete(@card)
+    @card
   end
 
 end

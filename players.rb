@@ -18,9 +18,9 @@ class Players
 
   def open_cards
     i = 0
+    puts "Total points Player #{self.name}: #{scoring_points}"
     puts "Cards Player #{self.name}"
     @hand.each { |card| puts "Card №#{i += 1}: #{card.face}#{card.suit}, points:#{card.value}" }
-    puts "Total points #{scoring_points}"
   end
 
   def draw(card)
