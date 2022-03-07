@@ -15,7 +15,7 @@ class Deck
       @faces.each do |face|
         if face.class == Integer
           value = face
-        elsif face == 'ace'
+        elsif face == 'Ace'
           value = 11
         else
           value = 10

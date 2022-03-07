@@ -1,7 +1,7 @@
 class Players
 
   attr_reader :name
-  attr_accessor :bankroll , :hand, :points
+  attr_accessor :bankroll, :hand, :points
 
   def initialize (name, bankroll, hand)
     @name = name
@@ -12,7 +12,12 @@ class Players
 
   def scoring_points
     @points = 0
-    @hand.each { |card| @points += card.value }
+    @hand.each do |card|
+      @points += card.value
+      if (card.face == "Ace") && (@points > 21)
+        @points -= 10
+      end
+    end
     return @points
   end
 
@@ -20,7 +25,7 @@ class Players
     i = 0
     puts "Total points Player #{self.name}: #{scoring_points}"
     puts "Cards Player #{self.name}"
-    @hand.each { |card| puts "Card №#{i += 1}: #{card.face}#{card.suit}, points:#{card.value}" }
+    @hand.each { |card| puts "Card №#{i += 1}: #{card.face}#{card.suit}" }
   end
 
   def draw(card)

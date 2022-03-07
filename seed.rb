@@ -6,6 +6,13 @@ d = Deck.new
 d.generate_deck
 a = []
 b = []
+card1 = Card.new('Jack', '♠', 10)
+card = Card.new('Ace', '♠', 11)
+a.push(card1)
+a.push(card)
+a.push(card)
+p1 = Player.new("Ivan", 100, a)
+p1.open_cards
 a.push(d.gets_card)
 a.push(d.gets_card)
 b.push(d.gets_card)
@@ -15,4 +22,3 @@ p2 = Dealer.new(100, b)
 p1.draw(d.gets_card)
 p1.open_cards
 p2.open_cards
-d
