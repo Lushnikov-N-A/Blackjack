@@ -1,26 +1,34 @@
 class Players
 
-  attr_reader :name, :points
-  attr_accessor :bank, :cards_on_hand
+  attr_reader :name
+  attr_accessor :bankroll , :hand, :points
 
-  def initialize (name, bank, cards_on_hand)
+  def initialize (name, bankroll, hand)
     @name = name
-    @bank = bank
-    @cards_on_hand = cards_on_hand
-    @cards_on_hand ||= []
+    @bankroll  = bankroll
+    @hand = hand
+    @hand ||= []
   end
 
   def scoring_points
     @points = 0
-    @cards_on_hand.each { |card| @points += card.value }
+    @hand.each { |card| @points += card.value }
     return @points
   end
 
   def open_cards
     i = 0
     puts "Cards Player #{self.name}"
-    @cards_on_hand.each { |card| puts "Card №#{i += 1}: #{card.face}#{card.suit}, points:#{card.value}" }
+    @hand.each { |card| puts "Card №#{i += 1}: #{card.face}#{card.suit}, points:#{card.value}" }
     puts "Total points #{scoring_points}"
+  end
+
+  def draw(card)
+    @hand.push(card)
+  end
+
+  def pass
+    puts "Your turn!"
   end
 
 end
