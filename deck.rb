@@ -31,5 +31,4 @@ class Deck
     @cards.delete(@card)
     @card
   end
-
 end

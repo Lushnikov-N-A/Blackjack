@@ -37,9 +37,8 @@ class Players
     self.bankroll -= bet
     @bet
   end
-    
+
   def pass
     puts "Your turn!"
   end
-
 end
