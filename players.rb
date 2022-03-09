@@ -1,6 +1,6 @@
 class Players
 
-  attr_reader :name
+  attr_reader :name, :bet
   attr_accessor :bankroll, :hand, :points
 
   def initialize (name, bankroll, hand)
@@ -32,6 +32,12 @@ class Players
     @hand.push(card)
   end
 
+  def place_bet
+    @bet = 10
+    self.bankroll -= bet
+    @bet
+  end
+    
   def pass
     puts "Your turn!"
   end
