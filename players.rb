@@ -23,8 +23,8 @@ class Players
 
   def open_cards
     i = 0
-    puts "Total points Player #{self.name}: #{scoring_points}"
-    puts "Cards Player #{self.name}"
+    puts "Очки игрока #{self.name}: #{scoring_points}"
+    puts "Карты игрока #{self.name}"
     @hand.each { |card| puts "Card №#{i += 1}: #{card.face}#{card.suit}" }
   end
 
@@ -39,6 +39,6 @@ class Players
   end
 
   def pass
-    puts "Your turn!"
+    puts "Твой ход, пропускаю!"
   end
 end
