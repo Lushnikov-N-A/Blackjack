@@ -1,9 +1,11 @@
 require_relative 'validation'
+require_relative 'bank'
 require_relative 'deck'
 require_relative 'card'
 require_relative 'players'
 require_relative 'player'
 require_relative 'dealer'
+bank = Bank.new
 d = Deck.new
 d.generate_deck
 a = []
@@ -13,8 +15,13 @@ a.push(d.gets_card)
 b.push(d.gets_card)
 b.push(d.gets_card)
 p1 = Player.new("Ivan", 100, a)
-p1 = Player.new("Ivan", 100, a)
 p2 = Dealer.new(100, b)
+bank.get_bet(p1.place_bet)
+bank.get_bet(p2.place_bet)
+p1.open_cards
+p2.open_cards
+
+
 p1.draw(d.gets_card)
 p1.open_cards
 p2.show_cards_dealer

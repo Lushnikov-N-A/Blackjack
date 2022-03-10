@@ -1,5 +1,5 @@
 class Players
-
+  
   attr_reader :name, :bet
   attr_accessor :bankroll, :hand, :points
 
