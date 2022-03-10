@@ -4,7 +4,7 @@ class Dealer < Players
     super
   end
 
-  def show_carts_dealer
+  def show_cards_dealer
     puts "Карты диллера:"
     (@hand.length).times {print '*'}
     puts

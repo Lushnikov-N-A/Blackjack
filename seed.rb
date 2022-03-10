@@ -17,7 +17,7 @@ p1 = Player.new("Ivan", 100, a)
 p2 = Dealer.new(100, b)
 p1.draw(d.gets_card)
 p1.open_cards
-p2.show_carts_dealer
+p2.show_cards_dealer
 
 p1.open_cards
 a.push(card1)
