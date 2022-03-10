@@ -1,5 +1,5 @@
 class Players
-  
+
   attr_reader :name, :bet
   attr_accessor :bankroll, :hand, :points
 
@@ -24,7 +24,7 @@ class Players
   def open_cards
     i = 0
     puts "Очки игрока #{self.name}: #{scoring_points}"
-    puts "Карты игрока #{self.name}"
+    puts "Карты игрока #{self.name}:"
     @hand.each { |card| puts "Card №#{i += 1}: #{card.face}#{card.suit}" }
   end
 

@@ -10,4 +10,8 @@ class Dealer < Players
     puts
   end
 
+  def next_step
+    puts "Ход игрока!"
+  end
+
 end
