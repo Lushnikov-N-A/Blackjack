@@ -39,6 +39,10 @@ class Players
   end
 
   def pass
-    puts "Твой ход, пропускаю!"
+    puts "#{self.name}: Твой ход, пропускаю!"
+  end
+
+  def show_bankroll
+    @bankroll
   end
 end
