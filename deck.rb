@@ -1,24 +1,25 @@
-class Deck
+# frozen_string_literal: true
 
+class Deck
   attr_reader :cards, :card
 
   def initialize
-      @faces = [*(2..10), 'Jack', 'Queen', 'King', 'Ace']
-      @suits = ['♠', '♥', '♦', '♣']
-      @cards = []
+    @faces = [*(2..10), 'Jack', 'Queen', 'King', 'Ace']
+    @suits = ['♠', '♥', '♦', '♣']
+    @cards = []
   end
 
   def generate_deck
     @suits.each do |suit|
       @faces.each do |face|
-        if face.class == Integer
-          value = face
-        elsif face == 'Ace'
-          value = 11
-        else
-          value = 10
-        end
-      @cards << Card.new(face, suit, value)
+        value = if face.instance_of?(Integer)
+                  face
+                elsif face == 'Ace'
+                  11
+                else
+                  10
+                end
+        @cards << Card.new(face, suit, value)
       end
     end
     @cards.shuffle!

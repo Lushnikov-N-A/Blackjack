@@ -1,17 +1,17 @@
-class Dealer < Players
+# frozen_string_literal: true
 
-  def initialize (name = "Dealer", bankroll, hand)
+class Dealer < Players
+  def initialize(name = 'Dealer', bankroll, hand)
     super
   end
 
   def show_cards_dealer
-    puts "Карты диллера:"
-    (@hand.length).times {print '*'}
+    puts 'Карты диллера:'
+    @hand.length.times { print '*' }
     puts
   end
 
   def next_step
-    puts "Ход игрока!"
+    puts 'Ход игрока!'
   end
-
 end

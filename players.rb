@@ -1,11 +1,12 @@
-class Players
+# frozen_string_literal: true
 
+class Players
   attr_reader :name, :bet
   attr_accessor :bankroll, :hand, :points
 
-  def initialize (name, bankroll, hand)
+  def initialize(name, bankroll, hand)
     @name = name
-    @bankroll  = bankroll
+    @bankroll = bankroll
     @hand = hand
     @hand ||= []
   end
@@ -14,17 +15,15 @@ class Players
     @points = 0
     @hand.each do |card|
       @points += card.value
-      if (card.face == "Ace") && (@points > 21)
-        @points -= 10
-      end
+      @points -= 10 if (card.face == 'Ace') && (@points > 21)
     end
-    return @points
+    @points
   end
 
   def open_cards
     i = 0
-    puts "Очки игрока #{self.name}: #{scoring_points}"
-    puts "Карты игрока #{self.name}:"
+    puts "Очки игрока #{name}: #{scoring_points}"
+    puts "Карты игрока #{name}:"
     @hand.each { |card| puts "Card №#{i += 1}: #{card.face}#{card.suit}" }
   end
 
@@ -39,7 +38,7 @@ class Players
   end
 
   def pass
-    puts "#{self.name}: Твой ход, пропускаю!"
+    puts "#{name}: Твой ход, пропускаю!"
   end
 
   def show_bankroll

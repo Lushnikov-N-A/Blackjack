@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'validation'
 require_relative 'bank'
 require_relative 'deck'
@@ -7,8 +9,8 @@ require_relative 'player'
 require_relative 'dealer'
 
 def start_game
-  puts "Игра Blackjack!"
-  puts "Введите имя игрока:"
+  puts 'Игра Blackjack!'
+  puts 'Введите имя игрока:'
   @name_player = gets.chomp.to_s
   @human = Player.new(@name_player, 100, [])
   @dealer = Dealer.new(100, [])
@@ -45,16 +47,17 @@ end
 
 def complete_card?
   if (@human.hand.length == 3) && (@dealer.hand.length == 3)
-    puts "У игроков по 3 карты, карты вскрываются!"
+    puts 'У игроков по 3 карты, карты вскрываются!'
     winner(@human, @dealer)
     true
   end
 end
 
 def distribution_bank
-  if @win_id == 2
+  case @win_id
+  when 2
     @dealer.bankroll += @bank.bank_to_winner
-  elsif @win_id == 1
+  when 1
     @human.bankroll += @bank.bank_to_winner
   else
     return_bet = @bank.return_bet
@@ -65,7 +68,7 @@ def distribution_bank
   puts "Банк игрока #{@dealer.name} = #{@dealer.show_bankroll}"
 end
 
-def winner(player1, player2)
+def winner(_player1, _player2)
   if (@human.scoring_points > @dealer.scoring_points) && (@human.scoring_points <= 21)
     puts "Выйграл игрок #{@human.name}"
     @win_id = 1
@@ -79,14 +82,14 @@ def winner(player1, player2)
     puts "Выйграл игрок #{@dealer.name}"
     @win_id = 2
   else
-    puts "Ничья."
+    puts 'Ничья.'
     @win_id = 0
   end
 end
 
 start_game
 game_loop = 1
-while game_loop == 1 do
+while game_loop == 1
   do_bet
   2.times do
     deal_cards
@@ -141,15 +144,12 @@ while game_loop == 1 do
       @human.draw(@deck.gets_card)
       @human.open_cards
       if complete_card? == true
-        open_all_cards
-        winner(@human, @dealer)
-        distribution_bank
       else
         puts 'Открываем карты.'
-        open_all_cards
-        winner(@human, @dealer)
-        distribution_bank
       end
+      open_all_cards
+      winner(@human, @dealer)
+      distribution_bank
     when 2
       open_all_cards
       winner(@human, @dealer)
@@ -157,12 +157,12 @@ while game_loop == 1 do
     end
   end
   puts "Играем еще раз? если да, введите: '1'!"
-  puts "Для выхода введите что угодно!"
+  puts 'Для выхода введите что угодно!'
   game_loop = gets.chomp.to_i
   @dealer.hand = []
   @human.hand = []
   if game_loop != 1
-    puts "Игра завершена!"
+    puts 'Игра завершена!'
     break
   end
 end
