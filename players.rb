@@ -25,6 +25,7 @@ class Players
     puts "Очки игрока #{name}: #{scoring_points}"
     puts "Карты игрока #{name}:"
     @hand.each { |card| puts "Card №#{i += 1}: #{card.face}#{card.suit}" }
+    puts ''
   end
 
   def draw(card)

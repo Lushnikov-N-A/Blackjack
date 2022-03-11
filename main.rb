@@ -17,6 +17,7 @@ def start_game
   @deck = Deck.new
   @deck.generate_deck
   @bank = Bank.new
+  puts ''
 end
 
 def do_bet
@@ -40,6 +41,12 @@ def step_dealer
   end
 end
 
+def human_gets_card
+  @human.draw(@deck.gets_card)
+  @human.open_cards
+  @human.next_step
+end
+
 def open_all_cards
   @human.open_cards
   @dealer.open_cards
@@ -48,7 +55,7 @@ end
 def complete_card?
   if (@human.hand.length == 3) && (@dealer.hand.length == 3)
     puts 'У игроков по 3 карты, карты вскрываются!'
-    winner(@human, @dealer)
+    choice_winner(@human, @dealer)
     true
   end
 end
@@ -68,23 +75,40 @@ def distribution_bank
   puts "Банк игрока #{@dealer.name} = #{@dealer.show_bankroll}"
 end
 
-def winner(_player1, _player2)
+@win_human_block = proc do
+  puts "Выйграл игрок #{@human.name}"
+  @win_id = 1
+end
+
+@win_dealer_block = proc do
+  puts "Выйграл игрок #{@dealer.name}"
+  @win_id = 2
+end
+
+def winner(block)
+  block.call
+end
+
+def choice_winner(_player1, _player2)
   if (@human.scoring_points > @dealer.scoring_points) && (@human.scoring_points <= 21)
-    puts "Выйграл игрок #{@human.name}"
-    @win_id = 1
+    winner(@win_human_block)
   elsif (@dealer.scoring_points > @human.scoring_points) && (@dealer.scoring_points <= 21)
-    puts "Выйграл игрок #{@dealer.name}"
-    @win_id = 2
+    winner(@win_dealer_block)
   elsif (@dealer.scoring_points > 21) && (@human.scoring_points <= 21)
-    puts "Выйграл игрок #{@human.name}"
-    @win_id = 1
+    winner(@win_human_block)
   elsif (@human.scoring_points > 21) && (@dealer.scoring_points <= 21)
-    puts "Выйграл игрок #{@dealer.name}"
-    @win_id = 2
+    winner(@win_dealer_block)
   else
     puts 'Ничья.'
     @win_id = 0
   end
+end
+
+def raund_end
+  open_all_cards
+  choice_winner(@human, @dealer)
+  distribution_bank
+  puts ''
 end
 
 start_game
@@ -103,14 +127,10 @@ while game_loop == 1
   puts ''
   case choice
   when 1
-    @human.draw(@deck.gets_card)
-    @human.open_cards
-    @human.next_step
+    human_gets_card
     step_dealer
     if complete_card? == true
-      open_all_cards
-      winner(@human, @dealer)
-      distribution_bank
+      raund_end
     else
       puts '1. Открыть карты.'
       puts '2. Пропустить ход.'
@@ -118,18 +138,14 @@ while game_loop == 1
       puts ''
       case choice
       when 1
-        open_all_cards
-        winner(@human, @dealer)
-        distribution_bank
+        raund_end
       when 2
         @human.open_cards
         @human.next_step
         step_dealer
         @dealer.next_step
         puts 'Открываем карты.'
-        open_all_cards
-        winner(@human, @dealer)
-        distribution_bank
+        raund_end
       end
     end
   when 2
@@ -141,19 +157,13 @@ while game_loop == 1
     puts ''
     case choice
     when 1
-      @human.draw(@deck.gets_card)
-      @human.open_cards
+      human_gets_card
       if complete_card? == true
-      else
         puts 'Открываем карты.'
       end
-      open_all_cards
-      winner(@human, @dealer)
-      distribution_bank
+      raund_end
     when 2
-      open_all_cards
-      winner(@human, @dealer)
-      distribution_bank
+      raund_end
     end
   end
   puts "Играем еще раз? если да, введите: '1'!"
@@ -161,6 +171,7 @@ while game_loop == 1
   game_loop = gets.chomp.to_i
   @dealer.hand = []
   @human.hand = []
+  puts ''
   if game_loop != 1
     puts 'Игра завершена!'
     break

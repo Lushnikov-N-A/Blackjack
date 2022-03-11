@@ -8,10 +8,11 @@ class Dealer < Players
   def show_cards_dealer
     puts 'Карты диллера:'
     @hand.length.times { print '*' }
-    puts
+    puts ''
   end
 
   def next_step
-    puts 'Ход игрока!'
+    puts "#{self.name}: Ход игрока!"
+    puts ''
   end
 end
