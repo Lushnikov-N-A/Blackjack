@@ -1,5 +1,6 @@
-class Bank
+# frozen_string_literal: true
 
+class Bank
   attr_accessor :bank
   attr_reader :bank_to_winner, :return_bet
 
@@ -11,13 +12,13 @@ class Bank
   def bank_to_winner
     @bank_to_winner = @bank
     @bank -= @bank
-    return @bank_to_winner
+    @bank_to_winner
   end
 
   def return_bet
-    @return_bet = @bank/2
+    @return_bet = @bank / 2
     @bank -= @bank
-    return @return_bet
+    @return_bet
   end
 
   def show_bank
