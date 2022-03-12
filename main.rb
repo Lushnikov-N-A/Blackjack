@@ -10,9 +10,15 @@ require_relative 'dealer'
 
 def start_game
   puts 'Игра Blackjack!'
-  puts 'Введите имя игрока:'
-  @name_player = gets.chomp.to_s
-  @human = Player.new(@name_player, 100, [])
+  begin
+    puts 'Введите имя игрока:'
+    @name_player = gets.chomp.to_s
+    @human = Player.new(@name_player, 100, [])
+    @human.valid?
+  rescue StandardError
+    puts 'Повторите ввод данных!'
+  retry
+  end
   @dealer = Dealer.new(100, [])
   @deck = Deck.new
   @deck.generate_deck
@@ -111,9 +117,32 @@ def raund_end
   puts ''
 end
 
+@new_round_block = proc do
+  puts "Играем еще раз? если да, введите: 'Да'!"
+  puts 'Для выхода введите что угодно!'
+  @human.bankroll = 100
+  @dealer.bankroll = 100
+end
+
+def new_round(block)
+  if @human.bankroll == 0
+    puts "У игрока #{@human.name} кончились деньги, он проиграл!"
+    block.call
+  elsif @dealer.bankroll == 0
+    puts "У игрока #{@dealer.name} кончились деньги, он проиграл!"
+    block.call
+  else
+    puts "Играем еще раз? если да, введите: 'Y'!"
+    puts 'Для выхода введите что угодно!'
+  end
+  @dealer.hand = []
+  @human.hand = []
+  puts ''
+end
+
 start_game
-game_loop = 1
-while game_loop == 1
+game_loop = 'Y'
+while game_loop == 'Y'
   do_bet
   2.times do
     deal_cards
@@ -166,13 +195,9 @@ while game_loop == 1
       raund_end
     end
   end
-  puts "Играем еще раз? если да, введите: '1'!"
-  puts 'Для выхода введите что угодно!'
-  game_loop = gets.chomp.to_i
-  @dealer.hand = []
-  @human.hand = []
-  puts ''
-  if game_loop != 1
+  new_round(@new_round_block)
+  game_loop = gets.chomp.to_s
+  if game_loop != 'Y'
     puts 'Игра завершена!'
     break
   end
